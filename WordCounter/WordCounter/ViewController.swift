@@ -31,10 +31,12 @@ class ViewController: UIViewController {
     /// Seperates a sentence in ordered words and respective frequency.
     /// - Parameter sentence: The sentence to seperate
     /// - Returns:A Array of Objects(word and frequency)
-    ///
+    /// - note:Seperates sentence by whitespace and punctuation characters
     func countWordsIn(_ sentence:String)-> [Words]{
-        let sentenceArray = sentence.components(separatedBy: " ").filter { !$0.isEmpty }
-
+        let lowerCaseSentence = sentence.lowercased()
+        var myCharacterSet = CharacterSet.whitespaces.union(.punctuationCharacters)
+        myCharacterSet.remove(charactersIn: "-")
+        let sentenceArray = lowerCaseSentence.components(separatedBy: myCharacterSet).filter { !$0.isEmpty }
         /// Checking all words in sentenceArray and adding them to the wordArray, if that word already exists inside the array it will increment the frequency of said object instead.
         
         for word in sentenceArray {
@@ -47,19 +49,21 @@ class ViewController: UIViewController {
         return wordArray
     }
     
-    /// On button tap checks if sentence textfield is empty:
-    /// - warning: - If empty shows alert - Else calls countWordsIn method with the text and performs segue.
+    /// On button tap checks if textfield has letters:
+    /// - warning: - If not shows alert - Else calls countWordsIn method with the text and performs segue.
     ///
     @IBAction func countButtonTapped(_ sender: Any){
         
-        guard let sentence = sentenceTextField.text, !sentence.isEmpty else {
+        guard let sentence = sentenceTextField.text, sentence.rangeOfCharacter(from: CharacterSet.letters) != nil else {
             let alert = UIAlertController(title: "Error", message: "Please enter a sentence", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default))
             self.present(alert, animated: true)
             return
         }
+        
         wordArray = countWordsIn(sentence)
         performSegue(withIdentifier: "segueToSecondVC", sender: nil)
+        
     }
 
     

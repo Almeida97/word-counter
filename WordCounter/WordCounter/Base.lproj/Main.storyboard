@@ -22,7 +22,7 @@
                                     <constraint firstAttribute="height" constant="130" id="GO6-zR-eeW"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Count"/>
                                 <connections>
                                     <action selector="countButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="29Z-iY-sLe"/>
                                 </connections>
